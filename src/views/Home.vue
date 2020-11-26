@@ -1,18 +1,24 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-  </div>
+  <v-card v-if="user">
+    <v-card-title> Hello, {{ user.name }}! </v-card-title>
+    <v-card-text> </v-card-text>
+  </v-card>
 </template>
 
-<script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue';
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator';
+import DB from '@/lib/DB';
+import { User } from '@/lib/User';
 
-export default {
-  name: 'Home',
-  components: {
-    HelloWorld
+@Component
+export default class Home extends Vue {
+  private user: User | null = null;
+
+  async created() {
+    const user = await DB.getUserInfo();
+    if (user) {
+      this.user = user;
+    }
   }
-};
+}
 </script>
