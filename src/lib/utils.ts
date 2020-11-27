@@ -23,6 +23,7 @@ export class Initialization {
   async ready() {
     if (this.initializer) {
       this.initializer();
+      this.initializer = null;
     } else {
       throw new Error('multiple initializations detected');
     }
